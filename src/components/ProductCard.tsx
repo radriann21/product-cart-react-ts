@@ -10,7 +10,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     <article className="flex flex-col font-customRegular">
       <div className="relative">
         <ImageCard image={product.image} name={product.name} />
-        <AddToCartButton />
+        <AddToCartButton product={product} />
       </div>
       <div className="mt-0">
         <span className="text-brand-400 text-sm block">{product.category}</span>

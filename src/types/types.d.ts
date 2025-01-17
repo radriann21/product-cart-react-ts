@@ -6,6 +6,7 @@ interface Image {
 }
 
 interface Product {
+  id: string;
   image: Image;
   name: string;
   category: string;
@@ -13,3 +14,12 @@ interface Product {
 }
 
 type Products = Product[];
+
+type ButtonState = {
+  active: boolean
+}
+
+type CartProduct = {
+  product: Product
+  quantity?: number
+}
