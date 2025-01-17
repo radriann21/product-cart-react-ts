@@ -7,6 +7,7 @@ type ProductCartCardProps = {
 
 export const ProductCartCard = ({ product }: ProductCartCardProps) => {
   const quitAllElements = useCartStore((state) => state.quitAllElements)
+  const totalProductPrice = product.price * (product.quantity ? product.quantity : 0)
 
   return (
     <li className="py-2 flex items-center justify-between w-full text-sm border-b-[1px] border-b-brand-100">
@@ -16,7 +17,7 @@ export const ProductCartCard = ({ product }: ProductCartCardProps) => {
           <span className="text-primary-custom-red font-customSemibold">{product.quantity}x</span>
           <div className="space-x-2">
             <span className="text-brand-400">@{product.price.toFixed(2)}</span>
-            <span className="text-brand-500 font-customSemibold">$5.50</span>
+            <span className="text-brand-500 font-customSemibold">${totalProductPrice.toFixed(2)}</span>
           </div>
         </div>
       </div>
