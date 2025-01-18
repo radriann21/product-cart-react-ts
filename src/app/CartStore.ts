@@ -11,6 +11,7 @@ type Action = {
   sumElement: (product: Product) => void,
   subsElement: (id: string) => void,
   quitAllElements: (id: string) => void
+  resetCart: () => void
 }
 
 export const useCartStore = create<State & Action>((set) => ({
@@ -59,5 +60,9 @@ export const useCartStore = create<State & Action>((set) => ({
       cart: updatedCart,
       totalElements
     };
-  })
+  }),
+  resetCart: () => set(() => ({
+    cart: [],
+    totalElements: 0
+  }))
 }));

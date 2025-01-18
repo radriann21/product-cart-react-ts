@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ShoppingCart } from "lucide-react"
 import { CircleMinus, CirclePlus } from 'lucide-react'
 import { useCartStore } from '../app/CartStore'
@@ -11,6 +11,8 @@ export const AddToCartButton = ({ product }: AddToCartButtonProps) => {
   const sumElement = useCartStore((state) => state.sumElement)
   const subsElement = useCartStore((state) => state.subsElement)
   const cart = useCartStore((state) => state.cart)
+  const productInCart = cart.find(el => el.id === product.id)
+  const quantity = productInCart?.quantity ?? 0
 
   const [buttonState, setButtonState] = useState<ButtonState>({
     active: false,
@@ -18,15 +20,18 @@ export const AddToCartButton = ({ product }: AddToCartButtonProps) => {
 
   const handleActive = () => {
     if (!buttonState.active) {
-      setButtonState((prevState) => ({
-        ...prevState,
-        active: true,
-      }))
+      setButtonState({ active: true })
       sumElement(product)
     }
   }
-  const productInCart = cart.find(el => el.id === product.id)
-  const quantity = productInCart?.quantity ?? 0
+
+  useEffect(() => {
+    if (quantity === 0) {
+      setButtonState({ active: false })
+    }
+  }, [quantity])
+
+
 
   return (
     <button onClick={handleActive} className={`px-6 xl:px-12 py-2 rounded-full ${buttonState.active ? ('bg-primary-custom-red') : ('bg-white')} border-2 border-primary-custom-red -translate-y-4 flex items-center justify-between text-sm mx-auto transition-colors duration-300 hover:text-primary-custom-red`}>
@@ -48,7 +53,7 @@ export const AddToCartButton = ({ product }: AddToCartButtonProps) => {
           : (
             <>
               <ShoppingCart className="stroke-primary-custom-red mx-2" />
-              <span className="font-customSemibold mx-2">Add to Cart</span>
+              <span className="font-customSemibold mx-2 text-brand-900">Add to Cart</span>
             </>
           )
       }
